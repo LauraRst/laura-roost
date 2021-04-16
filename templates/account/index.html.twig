@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Interior Deco{% endblock %}
+
+{% block body %}
+    <main class="container px-4 page-item page-account">
+        <div class="page-title py-4">
+            <h2>Mon compte</h2>
+        </div>
+            <div class="row">
+
+                {{ include('account/_user_menu.html.twig') }}
+
+                <div class="col">
+                    <h3>Votre espace personnel</h3>
+                    <p>Bonjour {{ user.username }}, bienvenue dans votre espace personnel.</p>
+                    {% if user.order is defined %}
+                        <div class="order">
+                            <h4>Votre dernière commande</h4>
+
+                            <div class="d-flex justify-content-between mt-3">
+                                <div>
+                                    <h4 class="h6">Numéro de commande</h4>
+                                    <p>{{ order.id }}</p>
+
+                                    <h4 class="h6">Date de commande</h4>
+                                    <p> {{ order.createdAt|date('d/m/Y') }}</p>
+
+                                    <h4 class="h6">Total</h4>
+                                    <p> {{ order.totalOrder}} &euro;</p>
+                                </div>
+                                <div class="align-self-baseline">
+                                    <a href="{{ path('detail', {id: order.id}) }}" class="btn btn-primary">Voir les détails</a>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    {% endif %}
+
+                    <div class="wishlist">
+                        <h4>Ajouté récemment dans votre liste d'envies</h4>
+                        <div class="row">
+                                {% set start =  (user.wishlist.products|length) - 3 %}
+                                {% for product in user.wishlist.products|slice(start, 3) %}
+                                    <div class="col-lg-4">
+                                        <div class="product-box">
+                                            <div class="product-img">
+                                                {% for image in product.image %}
+                                                    {% if loop.first %}
+                                                        <img src="{{ asset('images/products/' ~  image.file )}}" class="d-block w-100">
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                            </div>
+
+                                            <div class="product-content">
+                                                <div class="row align-items-start">
+                                                    <div class="product-info col-8">
+                                                        <h3 class="product-title">
+                                                            <a href="{{ path('product', {slug: product.slug})}}"> {{ product.name }}</a>
+                                                        </h3>
+                                                        <p>
+                                                            <a href="{{ path('category', {slug: product.category.slug}) }}" class="product-category"  >
+                                                                {{ product.category }}
+                                                            </a>
+                                                        </p>
+                                                    </div>
+                                                    <div class="product-price col-4 text-end">
+
+                                                        <p class="price-content">
+                                                            {% if product.sale  %}
+
+                                                                <span class="price-promotion">
+                                        {% set priceAfterSale = product.price - ((product.price / 100) * product.sale)  %}
+                                                                    {{ priceAfterSale|round}} &euro;
+                            </span>
+                                                            {% endif %}
+                                                            <span {% if product.sale %} class="price-regular" {% endif %} >
+                                                            {{ product.price }} &euro;
+                            </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                {% endfor %}
+
+
+
+                        </div>
+
+                        <p class="text-end"><a href="{{ path('wishlist') }}" class="btn btn-primary"> Voir ma wishlist</a></p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+    </main>
+{% endblock %}

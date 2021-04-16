@@ -1,0 +1,82 @@
+{# templates/_header.html.twig #}
+
+<header class="dekor-header">
+    <div class="upper-header text-end py-2">
+        <div class="container-fluid  px-4">
+            <a class="link" href="{{ path('about') }}">Le magasin</a>
+           <a class="link" href="{{ path('contact') }}">Nous contacter</a>
+        </div>
+    </div>
+    <div class="middle-header py-5">
+        <div class="container-fluid d-flex align-items-center  px-4">
+            <a class="logo" href="{{ path('home') }}">
+                <img src="{{ asset('images/logo.png') }}" alt="logo">
+            </a>
+            <div class="nav-link">
+                <a href="{{ path('shop') }}"> shop </a>
+                <a href="{{ path('blog') }}"> blog </a>
+                <a href="{{ path('faq') }}"> faq </a>
+
+            </div>
+            <div class="ms-auto icon-menu">
+                <a href="{{ path('account') }}"> <i class="fa fa-user "></i></a>
+                <a href="{{ path('wishlist') }}"> <i class="fa fa-heart"></i></a>
+                   <a href="{{ path('cart') }}" class="cart"> <i class="fa fa-shopping-basket"></i>
+                       {% if cart is defined and cart is not null %}
+                           <span class="count badge rounded-pill">{{ cart }}</span>
+                       {% endif %}
+                   </a>
+
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-expand-lg pb-3">
+        <div class="container-fluid px-4">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link" href="{{ path('home') }}"> <i class="fa fa-home"></i></a>
+                    <a class="nav-link" href="{{ path('sales') }}" class="text-danger">Soldes</a>
+                    <a class="nav-link" href="{{ path('new') }}">Nouveauté</a>
+                    {% for category in categories %}
+                        <a class="nav-link"
+                           href="{{ path('category', {slug: category.slug})}}"> {{ category.name }}</a>
+                    {% endfor %}
+                    <span class=" nav-item dropdown ">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                           Par pièce </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% for tag in tags %}
+                                {% if tag.type == 'Pièce' %}
+                                    <a class="nav-link dropdown-item"
+                                       href="{{ path('tag', {type:tag.slugType, slug: tag.slug}) }}"> {{ tag.name }}</a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                            </span>
+
+                    <span class=" nav-item dropdown ">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                           Par Style
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% for tag in tags %}
+                                {% if tag.type == 'Style' %}
+                                    <a class="nav-link dropdown-item"
+                                       href="{{ path('tag', {type:tag.slugType, slug: tag.slug}) }}"> {{ tag.name }}
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </span>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>

@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes commandes | Interior Deco{% endblock %}
+
+{% block body %}
+    <main class="container px-4 page-item page-account">
+        <div class="page-title py-4">
+            {{ wo_render_breadcrumbs({separator: '>', listId: 'breadcrumbs'}) }}
+            <h2>Mes commandes</h2>
+        </div>
+    <div class="row">
+        {{ include('account/_user_menu.html.twig') }}
+
+        <div class="col">
+            <h3>Aperçu de mes commandes</h3>
+            <p>Voir mes commandes, suivre mes colis, consulter les détails.
+
+            </p>
+            {% for message in app.flashes('notice') %}
+                <div class="alert alert-info">
+               <h4>
+                    {{ message }}
+               </h4>
+                    <p>
+                        Elle est maintenant en cours de préparation. Vous pouvez suivre l'état d'avancée de votre commande ci-dessous.
+                    </p>
+                </div>
+            {% endfor %}
+            {% if orders %}
+            <div class="row">
+                {% for order in orders %}
+                    <div class="order d-flex justify-content-between">
+                        <div>
+                         <h3 class="h5 bg-light p-2">   {{ order.status }}</h3>
+                            <h4 class="h6">Numéro de commande</h4>
+                            <p>{{ order.id }}</p>
+
+                            <h4 class="h6">Date de commande</h4>
+                            <p> {{ order.createdAt|date('d/m/Y') }}</p>
+
+                            <h4 class="h6">Total</h4>
+                            <p> {{ order.totalOrder }} &euro;</p>
+                        </div>
+                        <div class="align-self-center">
+                            <a href="{{ path('detail', {id: order.id}) }}" class="btn btn-primary">Voir les détails</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <h4 class="h5">Vous n'avez pas encore passé de commande.</h4>
+                <a href="{{ path('shop') }}" class="btn btn-primary">Faites votre choix</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    </main>
+{% endblock %}

@@ -1,0 +1,83 @@
+/* public/css/admin.css */
+:root {
+    --body-max-width: 100%;
+    --body-bg: #fcfcfc;
+    --border-radius: 0px;
+    --font-family-base: "Open sans", sans-serif;
+    --table-header-bg: #343a40;
+    -font-size-xl: 1.5rem;
+    --link-color : #fe8758;
+    --color-primary: #ffbda3;
+}
+
+.btn-primary, .btn-secondary {
+    box-shadow: none;
+    padding: .75rem 2rem;
+    border-radius: 0;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+.btn-primary, .page-item.active .page-link{
+    background-color: #ffbda3;
+    border-color: #ffbda3;
+    color: #212529;
+
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active{
+    background-color: #212529 ;
+}
+.custom-control-input:checked~.custom-control-label:before {
+   border-color: #343a40;
+    background-color: #343a40;
+}
+/*Dashboard*/
+
+.box {
+    background-color: #fff;
+    padding: 1em;
+    text-align: center;
+}
+.box h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.box .text {
+    font-size: 1.6rem;
+}
+.box i {
+    color : lightsalmon;
+}
+
+/*DATAGRID*/
+.sidebar-menu .header {
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-top: 15px;
+    padding: 7px 5px 7px 0;
+    /* text-transform: uppercase; */
+}
+.sidebar-menu .menu-icon {
+    font-size: 0.8rem;
+    vertical-align: middle;
+    width: inherit;
+}
+
+.datagrid thead a,  .datagrid thead span{
+    color : #ffffff;
+}
+.sidebar-menu li:not(.submenu-active).active .menu-icon, .sidebar-menu li:not(.submenu-active).active a {
+    color: #ff7640;
+}
+.sidebar a {
+    font-size: 0.8rem;
+}
+table a {
+    color : #4c5367;
+}
+table.datagrid {
+
+    font-size: 11px;
+}

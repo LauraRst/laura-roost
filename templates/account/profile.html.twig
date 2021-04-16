@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes informations personnelles | Interior Deco{% endblock %}
+
+{% block body %}
+    <main class="container px-4 page-item page-account">
+        <div class="page-title py-4">
+            {{ wo_render_breadcrumbs({separator: '>', listId: 'breadcrumbs'}) }}
+            <h2>Mes informations</h2>
+        </div>
+        <div class="row">
+            {{ include('account/_user_menu.html.twig') }}
+        <div class="col">
+            <div class="mb-2 pb-4">
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+               <span>
+                    <i class="fas fa-check"></i> {{ message }}
+               </span>
+                    </div>
+                {% endfor %}
+            <h3>Mes identifiants</h3>
+                {{ form_start(userForm) }}
+
+                {{ form_widget(userForm) }}
+                <button type="submit" class="btn btn-primary">Modifier mes identifiants</button>
+                {{ form_end(userForm) }}
+            </div>
+            <hr>
+            <div class="pb-4">
+                <h3>Modifier mon mot de passe </h3>
+                {{ form_start(passwordForm) }}
+                {{ form_widget(passwordForm) }}
+                <button type="submit" class="btn btn-primary">Modifier mon mot de passe</button>
+                {{ form_end(passwordForm) }}
+            </div>
+            <hr>
+
+            <div class="pt-4">
+                  <h3>Informations personnelles </h3>
+                {{ form_start(profileForm) }}
+
+                {{ form_widget(profileForm) }}
+                <button type="submit" class="btn btn-primary">Mettre à jour mes informations</button>
+                {{ form_end(profileForm) }}
+            </div>
+        </div>
+
+        </div>
+
+    </main>
+{% endblock %}

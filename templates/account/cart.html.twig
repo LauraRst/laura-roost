@@ -1,0 +1,158 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Panier | Interior Deco{% endblock %}
+
+{% block body %}
+    <main class="container px-4 page-item page-account">
+        <div class="page-title py-4">
+            {{ wo_render_breadcrumbs({separator: '>', listId: 'breadcrumbs'}) }}
+            <h2>Mon panier</h2>
+        </div>
+        {% if cart is not null and nbItems is not empty%}
+
+            {% set nbProduct = 0 %}
+
+            {% set totalTTC = 0 %}
+            {{ form_start(form) }}
+        <div class="d-flex">
+            <div class="w-75 cart">
+
+                <table class="cart-table table table-responsive">
+                    <thead class="cart-header">
+                    <tr>
+                        <td scope="col" colspan="2">
+                            Produit
+                        </td>
+                        <td scope="col" class="col-price">
+                            Prix unitaire
+                        </td>
+                        <td scope="col" class="col-quantity">
+                            Quantité
+                        </td>
+                        <td scope="col" class="col-total text-end">
+                            Total TTC
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody class="items">
+                        {% for item in form.carts %}
+
+                            <tr>
+                                <td class="thumb">
+                                    {% for image in item.vars.data.product.image %}
+                                        {% if loop.first %}
+                                            <img src="{{ asset('images/products/' ~  image.file ) }}">
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    <a href="{{ path('product', {slug:item.vars.data.product.slug}) }}" class="remove">
+                                            <span class="d-block product-title">
+                                           #{{ item.vars.data.product.id}} {{ item.vars.data.product.name }}
+                                        </span>
+                                    </a>
+
+                                    <a href="{{ path('deleteItem', {id:item.vars.data.id}) }}" class="remove">Supprimer l'article</a>
+
+                                </td>
+                                <td class="product-price">
+
+                                    {% if item.vars.data.reducedPrice %}
+                                    <span class="price-promotion">
+                                        {{ item.vars.data.reducedPrice|number_format(2, ',', ' ')  }}
+                                    </span>
+                                    {% endif %}
+                                    <span {% if  item.vars.data.reducedPrice %} class="price-regular" {% endif %}>
+                                          {{ item.vars.data.price|number_format(2, ',', ' ')  }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="form-inline">
+                                        <div class="form-group">
+                                            {{ form_widget(item.quantity, {
+                                                'attr': {
+                                                    'class': 'form-control form-control-sm ' ~ (item.quantity.vars.valid ? '' : 'is-invalid')
+                                                }
+                                            }) }}
+                                            <div class="invalid-feedback">
+                                                {{ form_errors(item.quantity) }}
+                                            </div>
+
+                                        </div>
+                                        {% set nbProduct = nbProduct + item.vars.data.quantity %}
+
+                                    </div>
+                                </td>
+                                <td class="text-end product-amount">
+                                    {{ item.vars.data.amount|number_format(2, ',', ' ')  }}
+                                    {% set totalTTC = totalTTC +  item.vars.data.amount  %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+                {{ form_widget(form.update) }}
+                {{ form_widget(form.delete) }}
+
+            </div>
+            <div class="flex-shrink-0 ">
+                <div class="cart-total">
+                    <h5>Récapitulatif de ma commande</h5>
+
+                        <p>
+                         {{ nbProduct }} article{% if nbProduct > 1 %}s{% endif %}
+                        </p>
+
+                    <hr>
+                    <div class="d-flex my-2">
+                        <p class=" h6">
+                            Total TTC
+                        </p>
+                        <p class="ms-auto h6">
+                        {{  totalTTC|number_format(2, ',', ' ') }}
+                        </p>
+                    </div>
+                    {{ form_widget(form.save) }}
+
+                </div>
+                <div class="mt-2 address p-3 mt-4 border">
+                    <h5>
+                        Adresse de livraison
+                    </h5>
+                    {% if user.address %}
+                        <p class="mb-0">
+                            {{ user.firstname }} {{ user.lastname }}
+                        </p>
+                    <p class="mb-0">
+                        {{ user.address }}
+                    </p>
+                        <p>
+                            {{ user.zipcode }} {{ user.city }}
+                        </p>
+                        {% else %}
+                        <p>Aucune adresse enregistrée</p>
+                    {% endif %}
+                    <a href="{{ path('address') }}" class="btn btn-outline-dark">Modifier</a>
+                </div>
+            </div>
+            {{ form_row(form._token) }}
+
+            {{ form_end(form, {'render_rest': false}) }}
+
+        </div>
+
+        {% else %}
+            <div>
+                <div class="alert alert-primary">
+                    <h3>Votre panier est vide.</h3>
+                    <p>Consultez vos <a href="{{ path('wishlist') }}"> articles sauvegardés </a> ou <a
+                                href="{{ path('shop') }}">commencez vos
+                            achats</a>.</p>
+
+                </div>
+            </div>
+        {% endif %}
+
+    </main>
+{% endblock %}

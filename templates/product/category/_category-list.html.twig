@@ -1,0 +1,9 @@
+<ul >
+    {% for category in productCategory %}
+        <li>
+            <a href="{{ path('category', {slug: category.slug}) }}"> {{ category.name }}
+            </a>
+        </li>
+    {% endfor %}
+
+</ul>

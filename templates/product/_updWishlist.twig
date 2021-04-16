@@ -1,0 +1,10 @@
+{{ form_start(form) }}
+{{ form_widget(form) }}
+<button type="submit" class="btn-wishlist">
+    {% if inWishlist == false %}
+    <i class="far fa-heart"></i>
+     {% else %}
+         <i class="fas fa-heart"></i>
+    {% endif %}
+</button>
+{{ form_end(form) }}

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Interior Deco{% endblock %}
+
+{% block body %}
+    <main class="container-fluid">
+        <div class="page-title py-4">
+            {{ wo_render_breadcrumbs({separator: '>', listId: 'breadcrumbs'}) }}
+            <h2>Parcourir les produits </h2>
+        </div>
+        <div class="row">
+
+            {% for tag in tags %}
+                <div class="col-lg-4">
+                    <a href="{{ path('tag', {type:tag.slugType, slug: tag.slug}) }}" >
+                        <img src="{{ asset('images/'~ tag.slug~ '.jpg') }}" alt="{{ tag.name }}" class="d-block w-100">
+                    </a>
+                    <h3 class="h4 mt-2 text-center" >
+                        <a href="{{ path('tag', {type:tag.slugType, slug: tag.slug}) }}" >{{ tag.name }}  </a>
+                    </h3>
+                </div>
+            {% endfor %}
+
+        </div>
+
+    </main>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blog{% endblock %}
+
+{% block body %}
+    <main class="container-fluid">
+        <div class="page-title py-4">
+            {{ wo_render_breadcrumbs({separator: '>', listId: 'breadcrumbs'}) }}
+            <h2>Inspirations</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus purus in massa tempor nec feugiat nisl pretium fusce. Euismod nisi porta lorem mollis.
+            </p>
+        </div>
+        <div class="row post">
+            {% include 'blog/_post.html.twig' %}
+        </div>
+
+    </main>
+{% endblock %}

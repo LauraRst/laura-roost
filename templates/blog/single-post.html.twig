@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ post.title }}{% endblock %}
+
+{% block body %}
+    <main class="container-fluid px-4 page-post">
+    {{ wo_render_breadcrumbs({separator: '>', listId: 'breadcrumbs'}) }}
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h2 class="post-title text-center ">
+                    {{ post.title }}
+                </h2>
+                <p class="post-meta text-center">
+                    Publié le {{ post.createdAt|date("d/m/Y") }}
+                    {%
+                        if post.updatedAt >  post.createdAt
+                    %}
+                        | Mis à jour le {{ post.updatedAt|date("d/m/Y") }}
+                    {%
+                        endif %}
+
+                </p>
+
+                <div class="post-image">
+                    <img src="{{ asset('images/blog/' ~  post.image ) }}" class="d-block w-100">
+
+                </div>
+
+                <p class="post-content mt-5 text-center">
+                    {{ post.content }}
+                </p>
+
+
+            </div>
+        </div>
+
+    </main>
+{% endblock %}

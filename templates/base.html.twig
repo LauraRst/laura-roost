@@ -1,19 +1,104 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %} &dash; DeKor, tout pour votre intérieur</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" type="text/css" media="all">
+        <link rel="stylesheet" href="{{ asset('css/fontawesome.min.css') }}" type="text/css" media="all">
+        <link rel="stylesheet" href="{{ asset('css/main.css') }}" type="text/css" media="all">
+        <link rel="stylesheet" href="{{ asset('css/swiper-bundle.min.css') }}" type="text/css" media="all">
 
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    {% endblock %}
+</head>
+<body>
+{{ render(controller(
+    'App\\Controller\\PagesController::header'
+)) }}
+{% block body %}
+{% endblock %}
+
+
+<footer>
+    <div class="footer py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h5>A propos</h5>
+                    <ul>
+                        <li><a href="{{ path('about') }}">A propos de Dekor</a></li>
+                        <li><a href="{{ path('shop') }}">Notre catalogue</a></li>
+                        <li><a href="{{ path('blog') }}">Nos idées</a></li>
+                        <li><a href="{{ path('contact') }}">Nous contacter</a></li>
+                    </ul>
+                    <a href=""> <i class="fab fa-twitter fa-2x "></i>
+                    </a>
+                    <a href=""> <i class="fab fa-facebook fa-2x"></i>
+                    </a>
+                    <a href=""> <i class="fab fa-instagram fa-2x"></i>
+                    </a>
+                    <a href=""> <i class="fab fa-pinterest fa-2x"></i>
+                    </a>
+
+                </div>
+
+                <div class="col">
+                    <h5>Tout savoir</h5>
+                    <ul>
+                        <li><a href="">Livraison</a></li>
+                        <li><a href="">Retours et remboursements</a></li>
+                        <li><a href="">Aide et FAQ</a></li>
+
+                    </ul>
+                </div>
+                <div class="col">
+                    <h5>Explorer par pièce </h5>
+                  {{ render(controller(
+                        'App\\Controller\\TagController::roomList'
+                    )) }}
+                </div>
+                <div class="col">
+                    <h5> Explorer par catégorie</h5>
+               {#     {{ render(controller(
+                        'App\\Controller\\CategoryController::categoryList'
+                    )) }}#}
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom bg-white pt-2 d-flex bd-highlight">
+
+        <div class="p-2  ">
+            <p class="d-inline m-0 ">
+                &copy; {{ "now"|date("Y") }}
+                Dekor.com &boxv;
+
+            </p>
+            <ul class="d-inline ">
+                <li class="d-inline "><a href="{{ path('cgv') }}">C.G.V</a> &dash;</li>
+                <li class="d-inline "><a href="{{ path('privacy') }}">Politique de confidentialité et cookies
+                    </a></li>
+            </ul>
+        </div>
+        <div class="ms-auto p-2 bd-highlight">
+            <p class="m-0">
+                <i class="fab fa-cc-visa"></i>
+                <i class="fab fa-cc-paypal"></i>
+                <i class="fab fa-cc-mastercard"></i>
+            </p>
+        </div>
+
+    </div>
+</footer>
+
+{% block javascripts %}
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/swiper-bundle.min.js') }}"></script>
+
+    <script src="{{ asset('js/main.js') }}"></script>
+
+
+{% endblock %}
+</body>
 </html>

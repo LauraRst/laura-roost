@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ma liste d'envie | Interior Deco{% endblock %}
+
+{% block body %}
+    <main class="container px-4 page-item page-account">
+        <div class="page-title py-4">
+            {{ wo_render_breadcrumbs({separator: '>', listId: 'breadcrumbs'}) }}
+            <h2>Ma liste d'envie</h2>
+        </div>
+        <div class="row">
+
+            {{ include('account/_user_menu.html.twig') }}
+
+            <div class="col">
+
+                <div class="row">
+                  {%
+                   if user.wishlist
+
+                   %}
+                    <p >Il y a {{ user.wishlist.products|length }} produit{% if user.wishlist.products|length > 1  %}s{% endif%} dans votre liste d'envie.</p>
+                      {% for product in user.wishlist.products %}
+                          <div class="col-lg-4">
+                              <div class="product-box">
+                                  <div class="product-img">
+                                      {% for image in product.image %}
+                                          {% if loop.first %}
+                                              <img src="{{ asset('images/products/' ~  image.file )}}" class="d-block w-100">
+                                          {% endif %}
+                                      {% endfor %}
+                                      <div class="heart-container">
+                                          {{ render(controller(
+                                              'App\\Controller\\WishlistController::updateWishlist', {id: product.id}
+                                          )) }}
+
+                                      </div>
+                                  </div>
+
+                                  <div class="product-content">
+                                      <div class="row align-items-start">
+                                          <div class="product-info col-8">
+                                              <h3 class="product-title">
+                                                  <a href="{{ path('product', {slug: product.slug})}}"> {{ product.name }}</a>
+                                              </h3>
+                                              <p>
+                                                  <a href="{{ path('category', {slug: product.category.slug}) }}" class="product-category"  >
+                                                      {{ product.category }}
+                                                  </a>
+                                              </p>
+                                          </div>
+                                          <div class="product-price col-4 text-end">
+
+                                              <p class="price-content">
+                                                  {% if product.sale  %}
+
+                                                      <span class="price-promotion">
+                                        {% set priceAfterSale = product.price - ((product.price / 100) * product.sale)  %}
+                                                          {{ priceAfterSale|round}} &euro;
+                            </span>
+                                                  {% endif %}
+                                                  <span {% if product.sale %} class="price-regular" {% endif %} >
+                                                            {{ product.price }} &euro;
+                            </span>
+                                              </p>
+                                          </div>
+                                      </div>
+
+                                  </div>
+                              </div>
+
+                          </div>
+                      {% endfor %}
+
+
+                  {% else %}
+                      <p>Aucun produit dans la wishlist</p>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+{% endblock %}

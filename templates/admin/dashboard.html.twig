@@ -1,0 +1,72 @@
+{% extends '@EasyAdmin/layout.html.twig' %}
+
+{% block main %}
+    <h1 class="h3">Dekor - Panneau d'administration</h1>
+    <div class="d-flex mt-2">
+        <div class="col">
+            <div class="box">
+                <h2>Utilisateurs <br/>
+                    inscrits</h2>
+                <div class="d-flex align-self-center  justify-content-center">
+                <p>
+                    <i class="fas fa-users"></i>
+                    <span class="text">
+                        {{ users }}
+                  </span>
+                </p>
+
+                </div>
+                <p>
+                    dont  {{ recentUsers }} ces 30 derniers jours
+                </p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="box">
+                <h2>Nombre de
+                    <br/>produits</h2>
+                <div class="d-flex align-self-center  justify-content-center">
+                    <p>
+                        <i class="fas fa-store"></i>
+
+
+                    <span class="text">
+                        {{ products }}
+                    </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="box">
+                <h2>Nombre de
+                    <br/>commandes</h2>
+                <div class="d-flex align-self-center  justify-content-center">
+                    <p>
+                        <i class="fas fa-shopping-basket"></i>
+                        <span class="text">
+                       {{ orders }}
+                   </span>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+        <div class="col">
+            <div class="box">
+                <h2>Articles
+                    <br/>publiés</h2>
+                <div class="d-flex align-self-center  justify-content-center">
+                <p>
+                    <i class="fas fa-newspaper"></i>
+                    <span class="text">
+                     {{ posts }}
+                  </span>
+                </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

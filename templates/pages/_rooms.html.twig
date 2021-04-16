@@ -1,0 +1,15 @@
+<div class="row rooms p-0">
+
+    {% for room in rooms %}
+        <div class="col p-0 room">
+                <a href="{{ path('tag', {type:room.slugType, slug: room.slug}) }}" ></a>
+            <img src="{{ asset('images/'~ room.slug~ '.jpg') }}" alt="{{ room.name }}" class="img">
+            <p class="h5">
+               {{ room.name }}
+            </p>
+        </div>
+    {% endfor %}
+
+</div>
+
+

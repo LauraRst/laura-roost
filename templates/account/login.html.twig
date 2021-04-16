@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Se connecter{% endblock %}
+
+{% block body %}
+    <main class="container px-4 page-item page-login">
+        <div class="page-title py-4">
+            <h2>Bienvenue sur Dekor.com</h2>
+        </div>
+        {% if error %}
+            <div class="alert alert-danger">
+                <span>
+                    <i class="fas fa-times"></i> {{ error.messageKey|trans(error.messageData, 'security') }}
+                </span>
+            </div>
+        {% endif %}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+               <span>
+                    <i class="fas fa-check"></i> {{ message }}
+               </span>
+            </div>
+        {% endfor %}
+        <div class="row justify-content-center">
+            <div class="col-4 login">
+                <h3>Connexion</h3>
+                <form action="{{ path('login') }}" method="post">
+                    <div class="form-group">
+                        <label for="username" class="form-label">Identifiant</label>
+                        <input type="text" class="form-control" required name="_username"  id="username" >
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="form-label">Mot de passe</label>
+                        <input type="password" class="form-control" required name="_password" id="password">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Connexion</button>
+                    </div>
+                </form>
+
+            </div>
+            <div class="col-4 register">
+                <h3>Pas encore de compte ?</h3>
+                <a href="{{ path('register') }}" class="btn btn-secondary">
+                    Créer un compte
+                </a>
+            </div>
+        </div>
+    </main>
+{% endblock %}

@@ -1,0 +1,162 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block body %}
+    <main class="container-fluid px-4 page-product">
+        {{ wo_render_breadcrumbs({separator: '>', listId: 'breadcrumbs'}) }}
+
+        <div class="row align-items-start mt-3">
+            <div class="col-7">
+                <div class="text-end">
+                    {% if app.user %}
+                        {{ render(controller(
+                            'App\\Controller\\WishlistController::updateWishlist', {id: product.id}
+                        )) }}
+                    {% elseif not app.user %}
+                        <a href="{{ path('login') }}" class="btn-wishlist">
+                            <i class="far fa-heart"></i>
+
+                        </a>
+                    {% endif %}
+
+                </div>
+                {% for image in product.image %}
+                    <img src="{{ asset('images/products/' ~  image.file ) }}" class="d-block w-100 mb-2">
+                {% endfor %}
+
+            </div>
+            <div class="col-4">
+                <h2>{{ product.name }}</h2>
+                <p class="h4">
+                    {% if product.sale %}
+                        {% set priceAfterSale = product.price - ((product.price / 100) * product.sale) %}
+                        <span class="price-promotion">{{ priceAfterSale|round }} &euro;</span>
+                    {% endif %}
+                    <span {% if product.sale %} class="price-regular" {% endif %} > {{ product.price }} &euro; </span>
+                </p>
+
+                <div class=" reviews">
+                    <h3>Vos avis ({{ product.review|length }})</h3>
+                    {% if product.review %}
+                    {% set total =  0 %}
+                    {% for review in  product.review %}
+
+                        {% set total = total + review.rate %}
+                    {% endfor %}
+                    {% if  product.review|length > 0 %}
+                        {% set rate = total / product.review|length %}
+                    {% else %}
+                        {% set rate = 0 %}
+                    {% endif %}
+                    <div class="review">
+                        <div class="ratings">
+
+
+                            {% if total > 0 %}
+                                <ul class="list-inline">
+
+                                    {% for i in 1..rate %}
+                                        <li class="list-inline-item m-0"><i class="fas fa-star"></i></li>
+
+                                    {% endfor %}
+                                    {% if rate < 5 %}
+                                        {% for i in 1..(5 - rate) %}
+                                            <li class="list-inline-item m-0"><i class="far fa-star"></i></li>
+                                        {% endfor %}
+                                    {% endif %}
+
+                                </ul>
+                            {% else %}
+                                <ul class="list-inline">
+                                    <li class="list-inline-item m-0"><i class="far fa-star"></i></li>
+                                    <li class="list-inline-item m-0"><i class="far fa-star"></i></li>
+                                    <li class="list-inline-item m-0"><i class="far fa-star"></i></li>
+                                    <li class="list-inline-item m-0"><i class="far fa-star"></i></li>
+                                    <li class="list-inline-item m-0"><i class="far fa-star"></i></li>
+                                </ul>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+
+                    </div>
+
+                    <p class="product-description">{{ product.description |striptags('<b>') }}</p>
+                    <div class="py-2">
+                        {% if product.isInStock %}
+                            <p class="text-success">
+                                &check; &nbsp; En stock
+                            </p>
+                        {% else %}
+                            <p class="grey">
+                                &cross; &nbsp; Stock épuisé
+                            </p>
+                        {% endif %}
+                    </div>
+
+                    {{ render(controller(
+                        'App\\Controller\\CartController::addToCart', {id: product.id}
+                    )) }}
+                    <hr>
+                    <div class=" reviews">
+                        <h3>Vos avis ({{ product.review|length }})</h3>
+                        {% if  product.review %}
+                            {% for review in  product.review %}
+                                <div class="review">
+                                    <p class="meta">
+                                        <span class="author">{{ review.user.username }}</span> - <span
+                                                class="date">{{ review.updatedAt|date('d/m/Y') }}</span>
+                                    </p>
+                                    <div class="ratings">
+                                        {% if review.rate > 0 %}
+                                            <ul class="list-inline">
+
+                                                {% for i in 1..review.rate %}
+                                                    <li class="list-inline-item m-0"><i class="fas fa-star"></i></li>
+
+                                                {% endfor %}
+                                                {% if review.rate < 5 %}
+                                                    {% for i in 1..(5 - review.rate) %}
+                                                        <li class="list-inline-item m-0"><i class="far fa-star"></i></li>
+                                                    {% endfor %}
+                                                {% endif %}
+
+                                            </ul>
+                                        {% else %}
+                                            <ul class="list-inline">
+                                                <li class="list-inline-item m-0"><i class="far fa-star"></i></li>
+                                                <li class="list-inline-item m-0"><i class="far fa-star"></i></li>
+                                                <li class="list-inline-item m-0"><i class="far fa-star"></i></li>
+                                                <li class="list-inline-item m-0"><i class="far fa-star"></i></li>
+                                                <li class="list-inline-item m-0"><i class="far fa-star"></i></li>
+                                            </ul>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="description">
+                                        <p>{{ review.content }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p>Il n'y a pas encore d'avis sur ce produit</p>
+                        {% endif %}
+
+                        <div class="add-review">
+
+                            <h4>Poster un avis</h4>
+
+                            {{ form_start(reviewForm) }}
+                            {{ form_widget(reviewForm) }}
+                            <button type="submit" class="btn-outline-dark btn">Poster mon avis</button>
+                            {{ form_end(reviewForm) }}
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+{% endblock %}

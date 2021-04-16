@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les produits{% endblock %}
+
+{% block body %}
+    <main class="container-fluid">
+        <div class="page-title py-4">
+            {{ wo_render_breadcrumbs({separator: '>', listId: 'breadcrumbs'}) }}
+            <h2>{{ tag.name}}</h2>
+        </div>
+        <div class="row product">
+            {# total items count #}
+            <div class="count">
+                <p class="">
+                    {{ products.getTotalItemCount }} produits
+                </p>
+                <p>
+                    Trier par :
+                </p>
+            </div>
+
+
+            {% include 'product/_box-product.html.twig' %}
+        </div>
+        <div class="pagination d-flex flex-row-reverse bd-highlight">
+            {{ knp_pagination_render(products) }}
+        </div>
+    </main>
+{% endblock %}

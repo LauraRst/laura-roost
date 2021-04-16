@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ma commande | Interior Deco{% endblock %}
+
+{% block body %}
+    <main class="container px-4 page-item page-account">
+        <div class="page-title py-4">
+            {{ wo_render_breadcrumbs({separator: '>', listId: 'breadcrumbs'}) }}
+            <h2>Mon compte</h2>
+        </div>
+        <div class="container-fluid ">
+            <div class="row">
+
+                {{ include('account/_user_menu.html.twig') }}
+
+                <div class="col">
+                    <h3>Votre commande</h3>
+
+                    <div class="order ">
+                        <div>
+                            <h3 class="h5 bg-light p-2">   {{ order.status }}</h3>
+                            <h4 class="h6">Numéro de commande</h4>
+                            <p>{{ order.id }}</p>
+
+                            <h4 class="h6">Date de commande</h4>
+                            <p> {{ order.createdAt|date('d/m/Y') }}</p>
+
+                            <table class="table align-middle table-sm ">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Produits</th>
+                                            <th scope="col"  class="text-center">Prix</th>
+                                            <th scope="col"  class="text-center">Quantité</th>
+                                            <th scope="col" class="text-end" >Montant total</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in items %}
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex  align-items-center">
+                                                        <div class="flex-shrink-0">
+                                                            {% for image in item.product.image %}
+                                                                {% if loop.first %}
+                                                                    <img src="{{ asset('images/products/' ~  image.file ) }}"
+                                                                         class="d-block  ">
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </div>
+                                                        <div class="flex-grow-1 ms-3">
+
+                                                            <h4 class="h6 ">
+                                                                <a href="{{ path('product', {slug: item.product.slug}) }}"> {{ item.product.name }}</a>
+                                                            </h4>
+                                                        </div>
+
+                                                    </div>
+
+                                                </td>
+                                                <td  class="text-center">
+                                                 {{ item.amount }} &euro;
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ item.quantity }}
+                                                </td>
+                                                <td class="text-end">
+
+                                                        {% set amount  =  item.amount *  item.quantity %}
+                                                    {{ amount|round }} &euro;
+                                                </td>
+
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+
+
+                            </table>
+
+
+                        </div>
+
+                        <div class="d-flex">
+                            <div class="flex-grow-1 ">
+                                <p class="h6"> Total à régler (TTC)
+                                </p>
+                            </div>
+                            <div>
+                              <p class="h6"> <b> {{ order.totalOrder }} &euro;</b> </p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <p class="text-end">
+                        <a href="{{ path('orders') }}" class="btn btn-outline-dark "> &laquo; Retour</a>
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+{% endblock %}

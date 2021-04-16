@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Interior Deco{% endblock %}
+
+{% block body %}
+    <main class="container-fluid">
+        <div class="page-title py-4">
+            {{ wo_render_breadcrumbs({separator: '>', listId: 'breadcrumbs'}) }}
+            <h2>{{ category.name }}</h2>
+
+        </div>
+        <div class="row product">
+            {% include 'product/_box-product.html.twig' %}
+        </div>
+
+    </main>
+{% endblock %}
