@@ -3,6 +3,19 @@
 Projet : boutique en ligne d'un magasin de meubles / décorations
 ****
 
+### Identifiants
+
+**Compte utilisateur**
+
+Login : user1
+
+Mot de passe : user1
+
+**Compte admin**
+
+Login : admin
+
+Mot de passe : admin
 
 ### Bundles 
 
@@ -14,7 +27,7 @@ Projet : boutique en ligne d'un magasin de meubles / décorations
 
 ### **Fonctionnalités**
 
-#### Front
+#### Front End
 
 **Homepage**
 
@@ -51,9 +64,16 @@ Simulation commande :
 - passe la commande "En cours de préparation"
 
 ****
-#### Back 
+#### Back End
 
 **Admin** 
 
 - Création d'un Dashboard pour le ROLE ADMIN
-- Crud Produits 
+- Crud Users
+- Crud produits : Upload de plusieurs image slug automatique
+- Crud catégories et tags : slug automatique 
+- Order : Consulter et Modifier le statut des commandes
+- Avis : Consulter et Supprimer les avis
+- Crud blog
+- Event subscriber pour produits et post (ajout de l'utilisateur et update date lors d'ajout/modification)
+

@@ -4,6 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\Product;
 use App\Form\ImageProductType;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -31,10 +33,15 @@ class ProductCrudController extends AbstractCrudController
 
             ;
     }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions->add(Crud::PAGE_INDEX, Action::DETAIL);
+    }
     public function configureFields(string $pageName): iterable
     {
         return [
-            IntegerField::new('id')->onlyOnIndex(),
+            IntegerField::new('id')->onlyOnIndex()->setFormTypeOption('disabled','disabled'),
             FormField::addPanel('Détails du produit'),
             BooleanField::new('is_inStock', 'En stock'),
             TextField::new('name', 'Nom '),
@@ -47,12 +54,12 @@ class ProductCrudController extends AbstractCrudController
             ->setSortable(false),
             FormField::addPanel('Informations supplémentaires'),
             AssociationField::new('category', 'Catégorie'),
-            AssociationField::new('tag', 'Etiquette')->onlyOnForms(),
-            TextField::new('weight', 'Poids (kg)')->onlyOnForms(),
-            TextField::new('dimensions', 'Dimension (cm)')->setHelp('ex : H83 x L214 x PR86')->onlyOnForms(),
+            AssociationField::new('tag', 'Etiquette')->hideOnIndex(),
+            TextField::new('weight', 'Poids (kg)')->hideOnIndex(),
+            TextField::new('dimensions', 'Dimension (cm)')->setHelp('ex : H83 x L214 x PR86')->hideOnIndex(),
             FormField::addPanel('Images du produit'),
             CollectionField::new('image', 'Image')
-                ->onlyOnForms()
+                ->hideOnIndex()
                 ->setTranslationParameters(['form.label.delete'=>'Supprimer l\'image'])
                 ->setEntryType(ImageProductType::class)
             ,

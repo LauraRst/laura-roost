@@ -64,6 +64,7 @@ class DashboardController extends AbstractDashboardController
     {
         return [
             MenuItem::linkToDashboard('Dashboard', 'fa fa-home'),
+            MenuItem::linkToRoute('Vers le site', 'fas fa-arrow-right', 'home'),
             MenuItem::section('Gestion des clients', 'fa fa-user'),
             MenuItem::linkToCrud('Comptes utilisateurs', '',User::class),
             MenuItem::section('Gestion du catalogue','fa fa-shopping-basket'),
@@ -73,7 +74,6 @@ class DashboardController extends AbstractDashboardController
             MenuItem::section('Service client', 'fa fa-headphones'),
             MenuItem::linkToCrud('Commandes', '', Order::class),
             MenuItem::linkToCrud('Avis', '', Review::class),
-
             MenuItem::section('Export et stats', 'fa fa-signal'),
             MenuItem::section('Blog', ' fa fa-file-text'),
             MenuItem::linkToCrud('Articles', '', Post::class),
@@ -83,6 +83,7 @@ class DashboardController extends AbstractDashboardController
         ];
 
     }
+
     public function configureAssets(): Assets
     {
         return Assets::new()->addCssFile('css/admin.css');

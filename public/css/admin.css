@@ -1,7 +1,7 @@
 /* public/css/admin.css */
 :root {
     --body-max-width: 100%;
-    --body-bg: #fcfcfc;
+    --body-bg: #e9f0f3;
     --border-radius: 0px;
     --font-family-base: "Open sans", sans-serif;
     --table-header-bg: #343a40;
@@ -36,9 +36,12 @@
 /*Dashboard*/
 
 .box {
+
+    text-align: center;
+}
+.section, .box{
     background-color: #fff;
     padding: 1em;
-    text-align: center;
 }
 .box h2 {
     font-size: 1.1rem;
