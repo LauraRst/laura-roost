@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Repository\CategoryRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,7 +47,7 @@ class CategoryController extends AbstractController
 
     public function categoryList(): Response
     {
-        $categories = $this->getDoctrine()->getRepository(ProductCategory::class)->findAll();
+        $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
 
         return $this->render('product/category/_category-list.html.twig', [
             'productCategory' => $categories,
