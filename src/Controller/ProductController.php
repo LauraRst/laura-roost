@@ -84,8 +84,10 @@ class ProductController extends AbstractController
         --------------------------------------------------------------*/
 
         $user = $this->getUser();
+        $title = "Poster un avis";
+        $btn = "Publier mon avis";
 
-        if($user) {
+        if ($user) {
             $user = $userRepository->find($user);
 
             $review = $reviewRepository->findOneBy([
@@ -98,6 +100,10 @@ class ProductController extends AbstractController
                 $review->setProduct($product);
                 $review->setUser($user);
                 $review->setCreatedAt(new \DateTime());
+            }
+            else {
+                $title = "Modifier mon avis";
+                $btn = "Modifier";
             }
         } else {
             $review = new Review();
@@ -124,6 +130,8 @@ class ProductController extends AbstractController
         return $this->render('product/single-product.html.twig', [
             'product' => $product,
             'reviewForm' => $reviewForm->createView(),
+            'title' => $title,
+            'btn' => $btn
         ]);
     }
 

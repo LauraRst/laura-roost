@@ -144,11 +144,11 @@
 
                         <div class="add-review">
 
-                            <h4>Poster un avis</h4>
+                            <h4>{{ title }}</h4>
 
                             {{ form_start(reviewForm) }}
                             {{ form_widget(reviewForm) }}
-                            <button type="submit" class="btn-outline-dark btn">Poster mon avis</button>
+                            <button type="submit" class="btn-outline-dark btn">{{ btn }}</button>
                             {{ form_end(reviewForm) }}
                         </div>
 
